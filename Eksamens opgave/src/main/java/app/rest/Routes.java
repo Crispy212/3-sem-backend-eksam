@@ -1,6 +1,7 @@
 package app.rest;
 
 import app.dtos.ErrorMessage;
+import app.controllers.SkiLessonController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
@@ -18,19 +19,13 @@ public class Routes
     private static Logger logger = LoggerFactory.getLogger(Routes.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
 
-    public static EndpointGroup getRoutes(EntityManagerFactory emf)
-    {
-        // instantiate controllers with emf here
+    public static EndpointGroup getRoutes(EntityManagerFactory emf) {
+        SkiLessonController controller = new SkiLessonController(emf);
+        SkiLessonRoutes skiLessonRoutes = new SkiLessonRoutes(controller);
 
         return () -> {
-            path("", () -> // write path name here
-            {
-                get("/",ctx -> { // write get path here
-                    // write get logic here
-                    ctx.json("test");
-                });
-                // write other http methods here
-            });
+            path("skilessons", skiLessonRoutes.getRoutes());
+
         };
     }
 }

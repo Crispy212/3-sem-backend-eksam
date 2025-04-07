@@ -1,0 +1,80 @@
+### Get all ski lessons
+GET http://localhost:7070/api/skilessons
+Accept: application/json
+
+###
+
+### Get a ski lesson by ID (example: ID = 1)
+GET http://localhost:7070/api/skilessons/2
+Accept: application/json
+
+###
+
+### Create a new ski lesson
+POST http://localhost:7070/api/skilessons
+Content-Type: application/json
+
+{
+  "name": "Fresh Powder Ride",
+  "startTime": "2025-12-01",
+  "endTime": "2025-12-07",
+  "longitude": 8.4048,
+  "latitude": 46.8320,
+  "price": 1999.99,
+  "level": "BEGINNER"
+}
+
+###
+
+### Update a ski lesson (example: ID = 1)
+PUT http://localhost:7070/api/skilessons/1
+Content-Type: application/json
+
+{
+  "name": "Fresh Powder Ride - Updated",
+  "startTime": "2025-12-01",
+  "endTime": "2025-12-08",
+  "longitude": 8.4050,
+  "latitude": 46.8330,
+  "price": 2099.99,
+  "level": "INTERMEDIATE"
+}
+
+###
+
+### Delete a ski lesson (example: ID = 1)
+DELETE http://localhost:7070/api/skilessons/3
+
+###
+
+### Assign instructor to ski lesson (example: lessonId = 2, instructorId = 1)
+PUT http://localhost:7070/api/skilessons/2/instructors/1
+
+###
+
+### Populate database with instructors and lessons
+POST http://localhost:7070/api/skilessons/populate
+
+### Get all BEGINNER lessons
+GET http://localhost:7070/api/skilessons/filter/BEGINNER
+Accept: application/json
+
+###
+
+### Get all INTERMEDIATE lessons
+GET http://localhost:7070/api/skilessons/filter/INTERMEDIATE
+Accept: application/json
+
+###
+
+### Get all ADVANCED lessons
+GET http://localhost:7070/api/skilessons/filter/ADVANCED
+Accept: application/json
+
+###
+
+### Get total lesson price for each instructor
+GET http://localhost:7070/api/skilessons/summary/price
+Accept: application/json
+
+###

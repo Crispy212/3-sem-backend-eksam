@@ -1,19 +1,13 @@
 package app;
 
 import app.config.HibernateConfig;
-import app.populators.RolePopulator;
-import app.populators.UserPopulator;
+import app.populators.InstructorPopulator;
+import app.populators.SkiLessonPopulator;
 import app.rest.ApplicationConfig;
 import app.rest.Routes;
-import app.security.daos.RoleDAO;
-import app.security.daos.UserDAO;
-import app.security.entities.Role;
-import app.security.entities.User;
 import app.security.rest.SecurityRoutes;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-
-import java.util.List;
 
 public class Main
 {
@@ -30,7 +24,7 @@ public class Main
                 .setRoute(Routes.getRoutes(emf))
                 .setRoute(SecurityRoutes.getRoutes(emf))
                 .handleException()
-                .startServer(7070); //TODO change this to an available port for deployment
+                .startServer(7070);
 
     }
 
@@ -38,15 +32,8 @@ public class Main
     {
         try(EntityManager em = emf.createEntityManager())
         {
-            // populates the database with roles
-            List<Role> roles = RolePopulator.populate();
-            RoleDAO roleDAO = RoleDAO.getInstance(emf);
-            roles.forEach(roleDAO::createRole);
-
-            // populates the database with users
-            List<User> users = UserPopulator.populate();
-            UserDAO userDAO = UserDAO.getInstance(emf);
-            users.forEach(userDAO::create);
+            InstructorPopulator.poulate(emf);
+            SkiLessonPopulator.populate(emf);
         }
     }
 
